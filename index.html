@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio – Dark & Modern</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080810;
+    --surface: #0f0f1a;
+    --card: #13131f;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --text: #e8e8f0;
+    --muted: #6b6b8a;
+    --border: rgba(108,99,255,0.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top:0; width:100%; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 1.2rem 6%;
+    background: rgba(8,8,16,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; color:#fff; letter-spacing:-0.03em; }
+  .logo span { color: var(--accent); }
+  nav ul { list-style:none; display:flex; gap:2.5rem; }
+  nav ul a { color: var(--muted); text-decoration:none; font-size:.9rem; letter-spacing:.05em; text-transform:uppercase; transition:.3s; }
+  nav ul a:hover { color:#fff; }
+  .nav-cta {
+    background: var(--accent); color:#fff; padding:.5rem 1.4rem;
+    border-radius:50px; font-size:.85rem; font-weight:600; text-decoration:none;
+    transition: .3s; letter-spacing:.03em;
+  }
+  .nav-cta:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(108,99,255,.4); }
+
+  /* HERO */
+  .hero {
+    min-height:100vh; display:flex; align-items:center;
+    padding: 0 6%; position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-20%; left:-10%;
+    width:60%; height:80%;
+    background: radial-gradient(ellipse, rgba(108,99,255,.12) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero::after {
+    content:''; position:absolute; bottom:-10%; right:-5%;
+    width:50%; height:60%;
+    background: radial-gradient(ellipse, rgba(255,101,132,.08) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; width:100%; max-width:1200px; }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:.5rem;
+    background: rgba(108,99,255,.12); border:1px solid rgba(108,99,255,.3);
+    border-radius:50px; padding:.4rem 1rem; font-size:.8rem;
+    color: var(--accent); letter-spacing:.08em; text-transform:uppercase;
+    margin-bottom:1.8rem; animation: fadeUp .8s ease both;
+  }
+  .hero-badge::before { content:'●'; font-size:.5rem; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .hero h1 {
+    font-family:'Syne',sans-serif; font-size:clamp(2.8rem,5vw,4.5rem);
+    font-weight:800; line-height:1.05; letter-spacing:-0.04em;
+    animation: fadeUp .8s .1s ease both;
+  }
+  .hero h1 .line2 { color: var(--accent); display:block; }
+  .hero-desc {
+    margin-top:1.5rem; color:var(--muted); line-height:1.7; font-size:1.05rem;
+    max-width:480px; animation: fadeUp .8s .2s ease both;
+  }
+  .hero-btns { display:flex; gap:1rem; margin-top:2.5rem; animation: fadeUp .8s .3s ease both; }
+  .btn-primary {
+    background: var(--accent); color:#fff; padding:.85rem 2rem;
+    border-radius:50px; font-weight:600; text-decoration:none; font-size:.95rem;
+    transition:.3s; display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(108,99,255,.45); }
+  .btn-outline {
+    border:1px solid var(--border); color:var(--text); padding:.85rem 2rem;
+    border-radius:50px; font-weight:600; text-decoration:none; font-size:.95rem;
+    transition:.3s; display:inline-flex; align-items:center; gap:.5rem;
+    background: transparent;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats {
+    display:flex; gap:2.5rem; margin-top:3rem; padding-top:2rem;
+    border-top: 1px solid var(--border); animation: fadeUp .8s .4s ease both;
+  }
+  .stat-num { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; color:#fff; }
+  .stat-label { font-size:.8rem; color:var(--muted); margin-top:.2rem; text-transform:uppercase; letter-spacing:.08em; }
+
+  /* HERO RIGHT - avatar card */
+  .hero-right { display:flex; justify-content:center; align-items:center; animation: fadeUp .8s .2s ease both; }
+  .avatar-card {
+    position:relative; width:340px; height:400px;
+    background: var(--card); border:1px solid var(--border);
+    border-radius:24px; overflow:hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .avatar-card::before {
+    content:''; position:absolute; top:0; left:0; right:0;
+    height:60%; background: linear-gradient(180deg, rgba(108,99,255,.2) 0%, transparent 100%);
+  }
+  .avatar-initials {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-55%);
+    width:120px; height:120px; border-radius:50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Syne',sans-serif; font-size:2.5rem; font-weight:800; color:#fff;
+    box-shadow: 0 20px 40px rgba(108,99,255,.4);
+  }
+  .avatar-info {
+    position:absolute; bottom:0; left:0; right:0;
+    padding:1.5rem; background: linear-gradient(0deg, var(--card) 60%, transparent);
+    text-align:center;
+  }
+  .avatar-name { font-family:'Syne',sans-serif; font-weight:700; font-size:1.2rem; }
+  .avatar-role { color:var(--accent); font-size:.85rem; margin-top:.3rem; }
+  .floating-tag {
+    position:absolute; background:rgba(15,15,26,.9); border:1px solid var(--border);
+    border-radius:12px; padding:.6rem 1rem; font-size:.78rem; backdrop-filter:blur(10px);
+  }
+  .tag1 { top:1.5rem; right:-1rem; color: #4ade80; }
+  .tag1::before { content:'✓ '; }
+  .tag2 { bottom:6rem; left:-1.5rem; color: var(--accent); }
+
+  /* SKILLS */
+  .skills { padding:6rem 6%; }
+  .section-label { font-size:.78rem; text-transform:uppercase; letter-spacing:.15em; color:var(--accent); font-weight:600; margin-bottom:1rem; }
+  .section-title { font-family:'Syne',sans-serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:800; letter-spacing:-.03em; margin-bottom:3rem; }
+  .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; }
+  .skill-card {
+    background: var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:1.8rem 1.5rem; transition:.3s; cursor:default;
+    position:relative; overflow:hidden;
+  }
+  .skill-card::before {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(135deg, rgba(108,99,255,.05) 0%, transparent 60%);
+    opacity:0; transition:.3s;
+  }
+  .skill-card:hover { border-color:rgba(108,99,255,.4); transform:translateY(-4px); }
+  .skill-card:hover::before { opacity:1; }
+  .skill-icon { font-size:2rem; margin-bottom:1rem; }
+  .skill-name { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:.5rem; }
+  .skill-bar { height:4px; background: rgba(255,255,255,.08); border-radius:2px; overflow:hidden; }
+  .skill-fill { height:100%; border-radius:2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition:width 1s ease; }
+
+  /* PROJECTS */
+  .projects { padding:6rem 6%; background: var(--surface); }
+  .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; margin-top:3rem; }
+  .project-card {
+    background: var(--card); border:1px solid var(--border); border-radius:20px;
+    overflow:hidden; transition:.3s; cursor:pointer;
+  }
+  .project-card:hover { transform:translateY(-6px); border-color:rgba(108,99,255,.3); box-shadow:0 20px 40px rgba(0,0,0,.4); }
+  .project-img {
+    height:200px; background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display:flex; align-items:center; justify-content:center;
+    font-size:3rem; position:relative; overflow:hidden;
+  }
+  .project-img::after {
+    content:''; position:absolute; inset:0;
+    background: rgba(0,0,0,.2);
+  }
+  .project-body { padding:1.5rem; }
+  .project-tags { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:.8rem; }
+  .tag { background:rgba(108,99,255,.15); color:var(--accent); font-size:.72rem; padding:.25rem .7rem; border-radius:50px; font-weight:600; letter-spacing:.05em; }
+  .project-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; margin-bottom:.5rem; }
+  .project-desc { color:var(--muted); font-size:.88rem; line-height:1.6; }
+  .project-link { display:inline-flex; align-items:center; gap:.4rem; color:var(--accent); font-size:.85rem; font-weight:600; margin-top:1rem; text-decoration:none; }
+  .project-link:hover { gap:.7rem; }
+
+  /* CONTACT */
+  .contact { padding:8rem 6%; text-align:center; position:relative; }
+  .contact-box {
+    max-width:600px; margin:0 auto;
+    background: var(--card); border:1px solid var(--border); border-radius:28px;
+    padding:4rem 3rem;
+    box-shadow: 0 0 80px rgba(108,99,255,.1);
+  }
+  .contact-emoji { font-size:3.5rem; margin-bottom:1.5rem; }
+  .contact-title { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; margin-bottom:1rem; }
+  .contact-desc { color:var(--muted); line-height:1.7; margin-bottom:2rem; }
+  .contact-input {
+    width:100%; background: var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:1rem 1.2rem; color:var(--text);
+    font-family:inherit; font-size:.95rem; outline:none; transition:.3s; margin-bottom:1rem;
+  }
+  .contact-input:focus { border-color:var(--accent); }
+  .btn-full { width:100%; justify-content:center; border-radius:12px; }
+
+  /* FOOTER */
+  footer {
+    padding:2rem 6%; border-top:1px solid var(--border);
+    display:flex; justify-content:space-between; align-items:center;
+    color:var(--muted); font-size:.85rem;
+  }
+  .footer-links { display:flex; gap:1.5rem; }
+  .footer-links a { color:var(--muted); text-decoration:none; transition:.3s; }
+  .footer-links a:hover { color:#fff; }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(30px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Alex<span>.</span></div>
+  <ul>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-badge">Available for work</div>
+      <h1>Full Stack <span class="line2">Developer</span></h1>
+      <p class="hero-desc">I build beautiful, performant web experiences that users love. Specializing in React, Node.js, and modern UI/UX design.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View My Work →</a>
+        <a href="#contact" class="btn-outline">Let's Talk</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">5+</div><div class="stat-label">Years Exp.</div></div>
+        <div><div class="stat-num">40+</div><div class="stat-label">Projects Done</div></div>
+        <div><div class="stat-num">20+</div><div class="stat-label">Happy Clients</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="avatar-card">
+        <div class="avatar-initials">AK</div>
+        <div class="avatar-info">
+          <div class="avatar-name">Alex Khan</div>
+          <div class="avatar-role">Full Stack Developer</div>
+        </div>
+        <div class="floating-tag tag1">Open to Work</div>
+        <div class="floating-tag tag2">🚀 Building Cool Stuff</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="skills" id="skills">
+  <div class="section-label">What I Do</div>
+  <div class="section-title">My Skill Set</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">⚛️</div>
+      <div class="skill-name">React / Next.js</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🖥️</div>
+      <div class="skill-name">Node.js / Express</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">UI / UX Design</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">Databases</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">☁️</div>
+      <div class="skill-name">Cloud / DevOps</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📱</div>
+      <div class="skill-name">Mobile (React Native)</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="projects" id="projects">
+  <div class="section-label">My Work</div>
+  <div class="section-title">Featured Projects</div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-img">💬</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Socket.io</span></div>
+        <div class="project-title">Real-time Chat App</div>
+        <div class="project-desc">A full-featured messaging platform with real-time communication, file sharing, and end-to-end encryption.</div>
+        <a href="#" class="project-link">View Project →</a>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-img" style="background:linear-gradient(135deg,#ff6584,#ff9f43)">🛒</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="tag">Next.js</span><span class="tag">Stripe</span><span class="tag">MongoDB</span></div>
+        <div class="project-title">E-Commerce Platform</div>
+        <div class="project-desc">Modern shopping experience with dynamic product catalogs, cart system, and seamless checkout flow.</div>
+        <a href="#" class="project-link">View Project →</a>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-img" style="background:linear-gradient(135deg,#4ade80,#22d3ee)">📊</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="tag">React</span><span class="tag">D3.js</span><span class="tag">PostgreSQL</span></div>
+        <div class="project-title">Analytics Dashboard</div>
+        <div class="project-desc">Business intelligence dashboard with real-time charts, KPI tracking, and exportable reports.</div>
+        <a href="#" class="project-link">View Project →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-box">
+    <div class="contact-emoji">✉️</div>
+    <div class="contact-title">Let's Work Together</div>
+    <p class="contact-desc">Have a project in mind? I'd love to hear about it. Drop me a message and let's create something amazing.</p>
+    <input class="contact-input" type="text" placeholder="Your Name">
+    <input class="contact-input" type="email" placeholder="Your Email">
+    <textarea class="contact-input" rows="4" placeholder="Your Message" style="resize:vertical"></textarea>
+    <a href="#" class="btn-primary btn-full">Send Message →</a>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Alex Khan. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#">GitHub</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Twitter</a>
+    <a href="#">Dribbble</a>
+  </div>
+</footer>
+
+</body>
+</html>
